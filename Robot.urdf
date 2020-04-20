@@ -29,9 +29,9 @@
           filename="package://STL/Render/NodeFL.STL" />
       </geometry>
       <material
-        name="">
+        name="NodeFRBase">
         <color
-          rgba="1 1 1 1" />
+          rgba="1 .5 1 1" />
       </material>
     </visual>
     <collision>
@@ -69,9 +69,9 @@
           filename="package://STL/Render/LegFLtop.STL" />
       </geometry>
       <material
-        name="">
+        name="LegFLTop">
         <color
-          rgba="0 1 1" />
+          rgba="0 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -127,7 +127,7 @@
           filename="package://STL/Render/LegFLbottom.STL" />
       </geometry>
       <material
-        name="">
+        name="LegFLbottom">
         <color
           rgba="0.5 0.5 0.5 1" />
       </material>
@@ -185,9 +185,9 @@
           filename="package://STL/Render/NodeFR.STL" />
       </geometry>
       <material
-        name="">
+        name="NodeFR">
         <color
-          rgba="1 0 0 1" />
+          rgba="1 0.5 0.5 1" />
       </material>
     </visual>
     <collision>
@@ -243,7 +243,7 @@
           filename="package://STL/Render/LegFRtop.STL" />
       </geometry>
       <material
-        name="">
+        name="LegFRtop">
         <color
           rgba="0 0 1 1" />
       </material>
@@ -301,7 +301,7 @@
           filename="package://STL/Render/LegFRbottom.STL" />
       </geometry>
       <material
-        name="">
+        name="LegFRbottom">
         <color
           rgba="0.89804 0.91765 0.92941 1" />
       </material>
@@ -359,7 +359,7 @@
           filename="package://STL/Render/NodeBR.STL" />
       </geometry>
       <material
-        name="">
+        name="NodeBR">
         <color
           rgba="0 1 0 1" />
       </material>
@@ -417,7 +417,7 @@
           filename="package://STL/Render/LegBRtop.STL" />
       </geometry>
       <material
-        name="">
+        name="LegBRtop">
         <color
           rgba="1 1 1 1" />
       </material>
@@ -475,7 +475,7 @@
           filename="package://STL/Render/LegBRbottom.STL" />
       </geometry>
       <material
-        name="">
+        name="LegBRbottom">
         <color
           rgba="0 1 1 1" />
       </material>
@@ -533,7 +533,7 @@
           filename="package://STL/Render/NodeBL.STL" />
       </geometry>
       <material
-        name="">
+        name="NodeBL">
         <color
           rgba="1 1 1 1" />
       </material>
@@ -591,9 +591,9 @@
           filename="package://STL/Render/LegBLtop.STL" />
       </geometry>
       <material
-        name="">
+        name="LegBLtop">
         <color
-          rgba="1 1 1" />
+          rgba=".5 1 .5 1" />
       </material>
     </visual>
     <collision>
@@ -649,7 +649,7 @@
           filename="package://STL/Render/LegBLbottom.STL" />
       </geometry>
       <material
-        name="">
+        name="LegBLbottom">
         <color
           rgba="1 0 1 1" />
       </material>
