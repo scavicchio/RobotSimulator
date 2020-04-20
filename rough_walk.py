@@ -57,12 +57,16 @@ for i in range (10000):
 
         p.setJointMotorControl2(RoboBoi, 0, p.POSITION_CONTROL, \
             target1)
-        # p.setJointMotorControl2(RoboBoi, 1, p.POSITION_CONTROL, \
+        # p.setJointMotorControl2(RoboBoi, 2, p.POSITION_CONTROL, \
         #     target1)
         p.setJointMotorControl2(RoboBoi, 3, p.POSITION_CONTROL, \
             target2)
-        # p.setJointMotorControl2(RoboBoi, 4, p.POSITION_CONTROL, \
-        #     target2)
+            
+        # have to change URDF lines 216, 217 to allow for joint movement
+        # p.setJointMotorControl2(RoboBoi, 2, p.POSITION_CONTROL, \
+        #     0.05)
+
+
         p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, \
             target3)
         # p.setJointMotorControl2(RoboBoi, 10, p.POSITION_CONTROL, \
