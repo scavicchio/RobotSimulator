@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="Robot">
+  <link
+    name="NodeFL">
+    <inertial>
+      <origin
+        xyz="-0.083675 0.0046599 0.04667"
+        rpy="0 0 0" />
+      <mass
+        value="3.5578" />
+      <inertia
+        ixx="0.013212"
+        ixy="-6.3498E-05"
+        ixz="-0.00039742"
+        iyy="0.010095"
+        iyz="1.6695E-06"
+        izz="0.016172" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/NodeFL.STL" />
+      </geometry>
+      <material
+        name="NodeFRBase">
+        <color
+          rgba="1 .5 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/NodeFL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="LegFLtop">
+    <inertial>
+      <origin
+        xyz="0.047937 -0.11059 0.024739"
+        rpy="0 0 0" />
+      <mass
+        value="0.41495" />
+      <inertia
+        ixx="0.0010583"
+        ixy="0.00019751"
+        ixz="4.9968E-08"
+        iyy="0.00020265"
+        iyz="1.9702E-08"
+        izz="0.0011571" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/LegFLtop.STL" />
+      </geometry>
+      <material
+        name="LegFLTop">
+        <color
+          rgba="0 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/LegFLtop.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LegFLtopJoint"
+    type="revolute">
+    <origin
+      xyz="0.00085062 0.0033885 0.050662"
+      rpy="1.5708 0.5901 1.5708" />
+    <parent
+      link="NodeFL" />
+    <child
+      link="LegFLtop" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="1.667"
+      velocity="6.25" />
+  </joint>
+  <link
+    name="LegFLbottom">
+    <inertial>
+      <origin
+        xyz="0.02 0.34874 0.022133"
+        rpy="0 0 0" />
+      <mass
+        value="0.18815" />
+      <inertia
+        ixx="0.0006376"
+        ixy="6.6863E-10"
+        ixz="-5.2001E-11"
+        iyy="4.4092E-05"
+        iyz="-2.2131E-05"
+        izz="0.00061305" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="-3.14 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/LegFLbottom.STL" />
+      </geometry>
+      <material
+        name="LegFLbottom">
+        <color
+          rgba="0.5 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="-3.14 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/LegFLbottom.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LegFLbottomJoint"
+    type="revolute">
+    <origin
+      xyz="0.034951 -0.24385 0.039243"
+      rpy="1.5708 0 2.859" />
+    <parent
+      link="LegFLtop" />
+    <child
+      link="LegFLbottom" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="1.667"
+      velocity="6.25" />
+  </joint>
+  <link
+    name="NodeFR">
+    <inertial>
+      <origin
+        xyz="0.010522 -0.22855 -0.045204"
+        rpy="0 0 0" />
+      <mass
+        value="3.5744" />
+      <inertia
+        ixx="0.016182"
+        ixy="-0.00038119"
+        ixz="0.0010331"
+        iyy="0.013312"
+        iyz="-0.00013007"
+        izz="0.010372" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/NodeFR.STL" />
+      </geometry>
+      <material
+        name="NodeFR">
+        <color
+          rgba="1 0.5 0.5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/NodeFR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="NodeFRtoFL"
+    type="prismatic">
+    <origin
+      xyz="-0.22314 -0.041066 0.049378"
+      rpy="3.1416 1.4002 1.5708" />
+    <parent
+      link="NodeFL" />
+    <child
+      link="NodeFR" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1"
+      upper="1"
+      effort="1.667"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegFRtop">
+    <inertial>
+      <origin
+        xyz="0.053647 -0.10777 -0.024774"
+        rpy="0 0 0" />
+      <mass
+        value="0.41495" />
+      <inertia
+        ixx="0.0010335"
+        ixy="0.00024421"
+        ixz="-2.2119E-08"
+        iyy="0.00022746"
+        iyz="9.361E-08"
+        izz="0.0011571" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/LegFRtop.STL" />
+      </geometry>
+      <material
+        name="LegFRtop">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/LegFRtop.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LegFRtopJoint"
+    type="revolute">
+    <origin
+      xyz="0.0067323 -0.31401 -0.046653"
+      rpy="-1.5708 0.75396 0" />
+    <parent
+      link="NodeFR" />
+    <child
+      link="LegFRtop" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="1.667"
+      velocity="6.25" />
+  </joint>
+  <link
+    name="LegFRbottom">
+    <inertial>
+      <origin
+        xyz="0.02 0.34598 -0.0004487"
+        rpy="0 0 0" />
+      <mass
+        value="0.18815" />
+      <inertia
+        ixx="0.0006376"
+        ixy="-6.6391E-10"
+        ixz="-9.4871E-11"
+        iyy="4.3603E-05"
+        iyz="-1.4548E-05"
+        izz="0.00061354" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/LegFRbottom.STL" />
+      </geometry>
+      <material
+        name="LegFRbottom">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/LegFRbottom.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LegFRbottomJoint"
+    type="revolute">
+    <origin
+      xyz="0.048978 -0.23798 -0.039243"
+      rpy="-1.5708 0 -0.2264" />
+    <parent
+      link="LegFRtop" />
+    <child
+      link="LegFRbottom" />
+    <axis
+      xyz="-1 0 0" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="1.667"
+      velocity="6.25" />
+  </joint>
+  <link
+    name="NodeBR">
+    <inertial>
+      <origin
+        xyz="0.013605 -0.19633 -0.0379"
+        rpy="0 0 0" />
+      <mass
+        value="3.796" />
+      <inertia
+        ixx="0.015744"
+        ixy="0.00031531"
+        ixz="0.00088543"
+        iyy="0.01188"
+        iyz="1.0411E-06"
+        izz="0.015161" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/NodeBR.STL" />
+      </geometry>
+      <material
+        name="NodeBR">
+        <color
+          rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/NodeBR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="NodeBRtoFR"
+    type="prismatic">
+    <origin
+      xyz="0.042552 -0.2667 -0.24704"
+      rpy="1.507 -0.15828 0.38525" />
+    <parent
+      link="NodeFR" />
+    <child
+      link="NodeBR" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1"
+      upper="1"
+      effort="1.667"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegBRtop">
+    <inertial>
+      <origin
+        xyz="0.024372 -0.11789 -0.024774"
+        rpy="0 0 0" />
+      <mass
+        value="0.41495" />
+      <inertia
+        ixx="0.0011015"
+        ixy="1.3546E-05"
+        ixz="2.4998E-09"
+        iyy="0.00015944"
+        iyz="9.6156E-08"
+        izz="0.0011571" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/LegBRtop.STL" />
+      </geometry>
+      <material
+        name="LegBRtop">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/LegBRtop.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LegBRtopJoint"
+    type="revolute">
+    <origin
+      xyz="-0.0042984 -0.19589 0.049227"
+      rpy="-2.7873 -0.14095 -1.2078" />
+    <parent
+      link="NodeBR" />
+    <child
+      link="LegBRtop" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="1.667"
+      velocity="6.25" />
+  </joint>
+  <link
+    name="LegBRbottom">
+    <inertial>
+      <origin
+        xyz="-0.33522 -0.085642 0.02"
+        rpy="0 0 0" />
+      <mass
+        value="0.18815" />
+      <inertia
+        ixx="8.589E-05"
+        ixy="-0.00015008"
+        ixz="6.1943E-10"
+        iyy="0.00057125"
+        iyz="2.5706E-10"
+        izz="0.0006376" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/LegBRbottom.STL" />
+      </geometry>
+      <material
+        name="LegBRbottom">
+        <color
+          rgba="0 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/LegBRbottom.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LegBRbottomJoint"
+    type="revolute">
+    <origin
+     xyz="-0.013369 -0.2426 -0.039243"
+      rpy="-1.5708 0 -0.48443" />
+    <parent
+      link="LegBRtop" />
+    <child
+      link="LegBRbottom" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="1.667"
+      velocity="6.25" />
+  </joint>
+  <link
+    name="NodeBL">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/NodeBL.STL" />
+      </geometry>
+      <material
+        name="NodeBL">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/NodeBL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="NodeBLtoFL"
+    type="prismatic">
+    <origin
+      xyz="-0.30641 0.40561 0.046076"
+      rpy="1.5708 0 0" />
+    <parent
+      link="NodeFL" />
+    <child
+      link="NodeBL" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1"
+      upper="1"
+      effort="1.667"
+      velocity="0" />
+  </joint>
+  <link
+    name="LegBLtop">
+    <inertial>
+      <origin
+        xyz="0.043847 -0.11228 0.024739"
+        rpy="0 0 0" />
+      <mass
+        value="0.41495" />
+      <inertia
+        ixx="0.0010716"
+        ixy="0.00016561"
+        ixz="5.0658E-08"
+        iyy="0.00018932"
+        iyz="1.7856E-08"
+        izz="0.0011571" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/LegBLtop.STL" />
+      </geometry>
+      <material
+        name="LegBLtop">
+        <color
+          rgba=".5 1 .5 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/LegBLtop.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LegBLtopJoint"
+    type="revolute">
+    <origin
+      xyz="0.30766 -0.010974 9.8262E-05"
+      rpy="-1.5708 1.0174 -1.5708" />
+    <parent
+      link="NodeBL" />
+    <child
+      link="LegBLtop" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="1.667"
+      velocity="6.25" />
+  </joint>
+  <link
+    name="LegBLbottom">
+    <inertial>
+      <origin
+        xyz="-0.34924 0.011628 -0.02"
+        rpy="0 0 0" />
+      <mass
+        value="0.18815" />
+      <inertia
+        ixx="4.3276E-05"
+        ixy="4.9763E-06"
+        ixz="6.6678E-10"
+        iyy="0.00061386"
+        iyz="7.2097E-11"
+        izz="0.0006376" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Render/LegBLbottom.STL" />
+      </geometry>
+      <material
+        name="LegBLbottom">
+        <color
+          rgba="1 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://STL/Simple/LegBLbottom.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="LegBLbottomJoint"
+    type="revolute">
+    <origin
+      xyz="0.039243 0.025981 -0.24496"
+      rpy="-1.5708 0 -0.31926" />
+    <parent
+      link="LegBLtop" />
+    <child
+      link="LegBLbottom" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.5"
+      upper="1.5"
+      effort="1.667"
+      velocity="6.25" />
+  </joint>
+</robot>
