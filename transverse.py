@@ -29,8 +29,8 @@ for i in range(p.getNumJoints(RoboBoi)):
 print("Here")
 ## Let's try to move the robot legs so it can stand
 ## Try moving back legs
-p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, 0.4)
-p.setJointMotorControl2(RoboBoi, 6, p.POSITION_CONTROL, 0.4)   
+p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, -0.4)
+p.setJointMotorControl2(RoboBoi, 6, p.POSITION_CONTROL, -0.4)   
 
 
 
