@@ -17,7 +17,7 @@ RobotStartPosition = [0,0, 0.75]
 RobotStartOrientation = p.getQuaternionFromEuler([0,0,0])
 RoboBoi = p.loadURDF("Robot.urdf",RobotStartPosition, RobotStartOrientation)
 
-## Create Parent-Child Map
+# Create Parent-Child Map
 parent_child_map = numpy.array([[0, 1], [1, 2], [0, 3], [3, 4], [4, 5], \
     [3, 6], [6, 7], [7, 8], [0, 9], [9, 10], [10, 11]])
 
