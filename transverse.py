@@ -3,7 +3,7 @@ import time
 import pybullet_data
 import numpy
 import math
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from scipy.spatial.transform import Rotation 
 
 
@@ -26,6 +26,7 @@ for i in range(p.getNumJoints(RoboBoi)):
     link = p.getJointInfo(RoboBoi, i)
     print(link)
 
+print("Here")
 ## Let's try to move the robot legs so it can stand
 ## Try moving back legs
 p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, 0.4)
@@ -63,21 +64,9 @@ for i in range (maxstep):
         all_target_2[i,0] = target2
         all_target_3[i,0] = target3
         all_target_4[i,0] = target4
-        ### REGULAR MOVEMENT COMMANDS
-        # p.setJointMotorControl2(RoboBoi, 0, p.POSITION_CONTROL, \
-        #     targepytt1)
-
-        # p.setJointMotorControl2(RoboBoi, 3, p.POSITION_CONTROL, \
-        #     target2)
-
-
-        # p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, \
-        #     target3)
-
-        # p.setJointMotorControl2(RoboBoi, 6, p.POSITION_CONTROL, \
-        #     target4)
-
-        ### TRANSVERSE MOVEMENT COMMANDS
+        
+        # TRANSVERSE MOVEMENT COMMANDS
+        print("setting movement")
         p.setJointMotorControl2(RoboBoi, 2, p.POSITION_CONTROL, \
             targetPosition = (0.1 + 0.1*math.sin(0.1*i)))
 
@@ -128,7 +117,7 @@ for i in range (maxstep):
 cubePos, cubeOrn = p.getBasePositionAndOrientation(RoboBoi)
 times = numpy.arange(maxstep)
 print(cubePos,cubeOrn)
-"""
+
 plt.figure(1)
 labels = ['Joint 0', 'Joint 3', 'Joint 9', 'Joint 6']
 plt.plot(times, all_target_1[:,0], 'r+', label = 'Joint 0')
@@ -152,5 +141,20 @@ plt.ylabel('Joint Linear Velocity, m/s')
 plt.xlabel('Simulation Time')
 plt.title('Joint Linear Speed')
 plt.show()
-"""
+
 p.disconnect()
+
+### REGULAR MOVEMENT COMMANDS
+        # p.setJointMotorControl2(RoboBoi, 0, p.POSITION_CONTROL, \
+        #     target1)
+
+        # p.setJointMotorControl2(RoboBoi, 3, p.POSITION_CONTROL, \
+        #     target2)
+
+
+        # p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, \
+        #     target3)
+
+        # p.setJointMotorControl2(RoboBoi, 6, p.POSITION_CONTROL, \
+        #     target4)
+
