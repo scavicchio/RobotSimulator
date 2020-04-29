@@ -6,6 +6,9 @@ import math
 import matplotlib.pyplot as plt
 from scipy.spatial.transform import Rotation 
 import random
+import multiprocessing as mp
+from multiprocessing import Pool
+print("Number of processors: ", mp.cpu_count())
 
 # this just gets the front left node for now
 def calcDistance(RoboBoi):
@@ -22,9 +25,14 @@ def currentSpeed(RoboBoi):
 	speed =	numpy.sqrt(sum(numpy.square(linear)))
 	return speed
 
-def resetParams(RoboBoi,originalPos,originalOrientation):
-	p.resetBasePositionAndOrientation(RoboBoi,originalPos,originalOrientation)
-	p.resetBaseVelocity(RoboBoi,[0,0,0],[0,0,0])
+def resetRobot(RoboBoi):
+	for joint in p.getNumJoints(RoboBoi):
+		p.resetJointState(RoboBoi,joint,0)
+
+
+
+	return 
+
 
 def randomizeParams(a,b,c,omega):
 	maxOmega = 2*3.14159
@@ -61,7 +69,7 @@ print("Here")
 ## Try moving back legs
 p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, -0.4)
 p.setJointMotorControl2(RoboBoi, 6, p.POSITION_CONTROL, -0.4)   
-
+INITSTATE = p.saveState()
 originalPos, originalOrientation = p.getBasePositionAndOrientation(RoboBoi)
 
 
@@ -84,7 +92,7 @@ omega_best = omega
 
 
 ## Simulate the thing
-maxstep = 5000
+maxstep = 1000
 evolutionIterations = 100
 
 #measures
@@ -98,8 +106,10 @@ target = numpy.zeros(p.getNumJoints(RoboBoi))
 
 for k in range(evolutionIterations):
 	print("Loop: " + str(k))
+	
+	#p.resetSimulation()
+	p.restoreState(INITSTATE)
 
-	resetParams(RoboBoi,originalPos,originalOrientation)
 	#randomize the thing
 	randomizeParams(a,b,c,omega)
 
@@ -116,8 +126,8 @@ for k in range(evolutionIterations):
 	    else:
 	        for j in range (p.getNumJoints(RoboBoi)):
 	            target[j] = a[j] + b[j]*math.sin(c[j]*i + omega[j])
-	      
-	   # time.sleep(1./120.)
+
+	    time.sleep(1./120.)
 
 	distanceTraveled[k] = calcDistance(RoboBoi)
 	finalSpeed[k] = currentSpeed(RoboBoi)
