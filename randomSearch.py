@@ -5,6 +5,36 @@ import numpy
 import math
 import matplotlib.pyplot as plt
 from scipy.spatial.transform import Rotation 
+import random
+
+# this just gets the front left node for now
+def calcDistance(RoboBoi):
+	
+	position, orientation = p.getBasePositionAndOrientation(RoboBoi);
+	pTemp = numpy.square(position)
+	distanceFromOrigin = numpy.sqrt(pTemp[0] + pTemp[1])
+
+	return distanceFromOrigin
+
+# speed of front left node
+def currentSpeed(RoboBoi):
+	linear, angular = p.getBaseVelocity(RoboBoi)
+	speed =	numpy.sqrt(sum(numpy.square(linear)))
+	return speed
+
+def resetParams(RoboBoi,originalPos,originalOrientation):
+	p.resetBasePositionAndOrientation(RoboBoi,originalPos,originalOrientation)
+	p.resetBaseVelocity(RoboBoi,[0,0,0],[0,0,0])
+
+def randomizeParams(a,b,c,omega):
+	maxOmega = 2*3.14159
+
+	for i in range(len(a)):
+		a[i] = random.uniform(-1,1)
+		b[i] = random.uniform(-1,1)
+		c[i] = random.uniform(-1,1)
+		omega[i] = random.uniform(0, maxOmega)
+
 
 
 
@@ -32,52 +62,78 @@ print("Here")
 p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, -0.4)
 p.setJointMotorControl2(RoboBoi, 6, p.POSITION_CONTROL, -0.4)   
 
+originalPos, originalOrientation = p.getBasePositionAndOrientation(RoboBoi)
 
-a = numpy.zeros(p.getNumJoints(RoboBoi))
-b = numpy.zeros(p.getNumJoints(RoboBoi))
-c = numpy.zeros(p.getNumJoints(RoboBoi))
-omega = numpy.zeros(p.getNumJoints(RoboBoi))
 
-a[:] = 0.4 
-b[:] = 0.2
-c[:] = 0.01
-omega[:] = 0
+a = -0.4 
+b = 0.2
+c = 0.01
+omega = 0
+
+a = numpy.full(p.getNumJoints(RoboBoi),a)
+b = numpy.full(p.getNumJoints(RoboBoi),b)
+c = numpy.full(p.getNumJoints(RoboBoi),c)
+omega = numpy.full(p.getNumJoints(RoboBoi),omega)
+
+#previous state
+a_best = a
+b_best = b
+c_best = c
+omega_best = omega
+
+
 
 ## Simulate the thing
-maxstep = 10000
+maxstep = 5000
+evolutionIterations = 100
+
+#measures
+distanceTraveled = numpy.zeros(evolutionIterations)
+finalSpeed = numpy.zeros(evolutionIterations)
 
 target = numpy.zeros(p.getNumJoints(RoboBoi))
 #all_target = numpy.zeros()
-for i in range (maxstep):
-
-    p.stepSimulation()
-## Do all our joint/link data handling before moving
-
-    if i > 500:
-        for j in range (p.getNumJoints(RoboBoi)):
-            target[j] = a[j] + b[j]*math.sin(c[j]*i + omega[j])
-          #  all_target[j][i] = target1
-            p.setJointMotorControl2(RoboBoi,j,p.POSITION_CONTROL,target[j])
-
-    else:
-        for j in range (p.getNumJoints(RoboBoi)):
-            target[j] = a[j] + b[j]*math.sin(c[j]*i + omega[j])
-           # all_target[j][i] = target1
-
-    time.sleep(1./240.)
 
 
-cubePos, cubeOrn = p.getBasePositionAndOrientation(RoboBoi)
-times = numpy.arange(maxstep)
-print(cubePos,cubeOrn)
+
+for k in range(evolutionIterations):
+	print("Loop: " + str(k))
+
+	resetParams(RoboBoi,originalPos,originalOrientation)
+	#randomize the thing
+	randomizeParams(a,b,c,omega)
+
+	for i in range (maxstep):
+
+	    p.stepSimulation()
+	## Do all our joint/link data handling before moving
+	    if i > 500:
+	        for j in range (p.getNumJoints(RoboBoi)):
+	            target[j] = a[j] + b[j]*math.sin(c[j]*i + omega[j])
+	          #  all_target[j][i] = target1
+	            p.setJointMotorControl2(RoboBoi,j,p.POSITION_CONTROL,target[j])
+
+	    else:
+	        for j in range (p.getNumJoints(RoboBoi)):
+	            target[j] = a[j] + b[j]*math.sin(c[j]*i + omega[j])
+	      
+	   # time.sleep(1./120.)
+
+	distanceTraveled[k] = calcDistance(RoboBoi)
+	finalSpeed[k] = currentSpeed(RoboBoi)
+
+	if (k != 0):
+		if(distanceTraveled[k] > distanceTraveled[k-1]):
+			print("found better solution on iteration: " + str(k))
+			a_best = a
+			b_best = b
+			c_best = c
+			omega_best = omega
+
 
 plt.figure(1)
-labels = ['Joint 0']
-plt.plot(times, all_target_1[:], 'r+', label = 'Joint 0')
-plt.legend()
-plt.ylabel('Joint Configuration, Radians')
-plt.xlabel('Simulation Time')
-plt.title('Joint Angles')
+labels = ['Distance Traveled']
+plt.plot(distanceTraveled)
 plt.show()
 
 p.disconnect()
