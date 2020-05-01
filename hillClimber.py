@@ -226,7 +226,7 @@ for k in range(evolutionIterations):
 	resetRobot(RoboBoi)
 
 	#randomize the thing
-	randomizeParams(a,b,c,omega)
+	hillClimb(a,b,c,omega)
 
 	for i in range (maxstep):
 
