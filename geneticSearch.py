@@ -203,7 +203,6 @@ c_best = c
 omega_best = omega
 
 
-
 ## Simulate the thing
 maxstep = 15000
 evolutionIterations = 10000
