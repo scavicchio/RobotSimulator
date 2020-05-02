@@ -33,7 +33,6 @@ def calcDistance(RoboBoi):
 	position, orientation = p.getBasePositionAndOrientation(RoboBoi);
 	pTemp = numpy.square(position)
 	distanceFromOrigin = numpy.sqrt(pTemp[0] + pTemp[1])
-
 	return distanceFromOrigin
 
 def isTurnedOver(RoboBoi):
@@ -227,7 +226,7 @@ def randomizeParams(a,b,c,omega):
 			b[i] = random.uniform(0,1)
 			c[i] = random.uniform(0,.1)
 			omega[i] = random.uniform(0, maxOmega)
-
+	return 
 
 ## Loading
 physicsClient = p.connect(p.GUI)#or p.DIRECT for non-graphical version
@@ -330,7 +329,7 @@ for k in range(evolutionIterations):
 	distanceTraveled[k] = calcDistance(RoboBoi)
 	finalSpeed[k] = currentSpeed(RoboBoi)
 
-	if (k != 0 and not tuenover):
+	if (k != 0):
 		if(distanceTraveled[k] > distanceTraveled[bestIter]):
 			bestIter = k
 			print("found better solution on iteration: " + str(k))
@@ -366,23 +365,23 @@ print(intermediateResultList)
 pool.close()
 pool.join()
 
-with open("intermediateResultsHILL.csv", 'w', newline='') as myfile:
+with open("intermediateResultsHILLsaveFlipped.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(intermediateResults)
 
-with open("finalResultHILL.csv", 'w', newline='') as myfile:
+with open("finalResultHILLsaveFlipped.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(a_best)
      wr.writerow(b_best)
      wr.writerow(c_best)
      wr.writerow(omega_best)
 
-with open("DistanceHILL.csv", 'w', newline='') as myfile:
+with open("DistanceHILLsaveFlipped.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(distanceTraveled)
 
 
-with open("finalSpeedHILL.csv", 'w', newline='') as myfile:
+with open("finalSpeedHILLsaveFlipped.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(finalSpeed)
 

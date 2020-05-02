@@ -7,16 +7,6 @@ import matplotlib.pyplot as plt
 from scipy.spatial.transform import Rotation 
 import random
 import csv
-from multiprocessing import Pool
-pool_size = 1
-pool = Pool(pool_size)
-
-# define worker function before a Pool is instantiated
-def worker(item):
-    try:
-        api.my_operation(item)
-    except:
-        print('error with item')
 
 def setTarget(j,i):
 	target[j] = a[j] + b[j]*math.sin(c[j]*i + omega[j])
@@ -26,14 +16,12 @@ def setJoint(j,i,RoboBoi):
 	setTarget(j,i)
 	p.setJointMotorControl2(RoboBoi,j,p.POSITION_CONTROL,target[j])
 
-
 # this just gets the front left node for now
 def calcDistance(RoboBoi):
 	
 	position, orientation = p.getBasePositionAndOrientation(RoboBoi);
 	pTemp = numpy.square(position)
 	distanceFromOrigin = numpy.sqrt(pTemp[0] + pTemp[1])
-
 	return distanceFromOrigin
 
 def isTurnedOver(RoboBoi):
@@ -44,8 +32,6 @@ def isTurnedOver(RoboBoi):
 			return True;
 
 	return False;
-
-
 
 # speed of front left node
 def currentSpeed(RoboBoi):
@@ -152,82 +138,28 @@ def hillClimbSingle(a,b,c,omega):
 
 	return
 
-def hillClimb(a,b,c,omega):
-	omega_max = 2*3.14159
-	a_max = 1
-	b_max = 1
-	c_max = 0.1
-	a_min = 0
-	b_min = 0
-	c_min = 0
-	omega_min = 0
-	
-	for i in range(len(a)):
-		if (i == 3): 
-			a[i] = a[0]
-			b[i] = b[0]
-			c[i] = c[0]
-			omega[i] = omega[0]
-		if (i == 8):
-			a[i] = a[5]
-			b[i] = b[5]
-			c[i] = c[5]
-			omega[i] = omega[5]
-		else: 
-			a_tmp = a[i]
-			num = random.uniform(-0.05,0.05)
-			a[i] = a[i]+a[i]*num
-			if (a[i] > a_max):
-				a[i] = a_tmp-a_tmp*num
-			elif (a[i] < a_min):
-				a[i] = a_tmp+a_tmp*num
+def simulateBot(RoboBoi,maxstep):
+	# save every 1000 bots
+	resetRobot(RoboBoi)
 
-			b_tmp = b[i]
-			num = random.uniform(-0.05,0.05)
-			b[i] = b[i]+b[i]*num
-			if (b[i] > b_max):
-				b[i] = b_tmp-b_tmp*num
-			elif (b[i] < b_min):
-				b[i] = b_tmp+b_tmp*num
+	#hill climb the thing
+	hillClimbSingle(a,b,c,omega)
 
-			c_tmp = c[i]
-			num = random.uniform(-0.05,0.05)
-			c[i] = c[i]+c[i]*num
-			if (c[i] > c_max):
-				c[i] = c_tmp-c_tmp*random.uniform(-0.05,0.05)
-			elif (c[i] < c_min):
-				c[i] = c_tmp+c_tmp*num
+	tuenover = False
+	for i in range (maxstep):
 
-			omega_tmp = omega[i]
-			num = random.uniform(-0.05,0.05)
-			omega[i] = omega[i]+omega[i]*num
-			if (omega[i] > omega_max):
-				omega[i] = omega_tmp-omega_tmp*random.uniform(-0.05,0.05)
-			elif (omega[i] < omega_min):
-				omega[i] = c_tmp+omega_tmp*num
+		p.stepSimulation()
+	## Do all our joint/link data handling before moving
+		if i > 500:
+			tuenover = isTurnedOver(RoboBoi)
+			if (tuenover):
+				break
+			else:
+				for j in range (p.getNumJoints(RoboBoi)):
+					#pool.apply_async(worker, setJoint(j,i,RoboBoi))
+					setJoint(j,i,RoboBoi)
 
 	return
-
-def randomizeParams(a,b,c,omega):
-	maxOmega = 2*3.14159
-
-	for i in range(len(a)):
-		if (i == 3): 
-			a[i] = a[0]
-			b[i] = b[0]
-			c[i] = c[0]
-			omega[i] = omega[0]
-		if (i == 8):
-			a[i] = a[5]
-			b[i] = b[5]
-			c[i] = c[5]
-			omega[i] = omega[5]
-		else: 
-			a[i] = random.uniform(0,1)
-			b[i] = random.uniform(0,1)
-			c[i] = random.uniform(0,.1)
-			omega[i] = random.uniform(0, maxOmega)
-
 
 ## Loading
 physicsClient = p.connect(p.GUI)#or p.DIRECT for non-graphical version
@@ -247,14 +179,12 @@ for i in range(p.getNumJoints(RoboBoi)):
     link = p.getJointInfo(RoboBoi, i)
     print(link)
 
-print("Here")
 ## Let's try to move the robot legs so it can stand
 ## Try moving back legs
 p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, -0.4)
 p.setJointMotorControl2(RoboBoi, 6, p.POSITION_CONTROL, -0.4)   
 INITSTATE = p.saveState()
 originalPos, originalOrientation = p.getBasePositionAndOrientation(RoboBoi)
-
 
 a = -0.4 
 b = 0.2
@@ -275,21 +205,21 @@ omega_best = omega
 
 
 ## Simulate the thing
-maxstep = 20000
+maxstep = 15000
 evolutionIterations = 10000
+population = 10
 
-intermediateResults = numpy.zeros([4,p.getNumJoints(RoboBoi)])
-print(intermediateResults)
+intermediateResults = numpy.full(numpy.zeros([4,p.getNumJoints(RoboBoi)]),population)
 
 intermediateResultList = []
 
 #measures
-distanceTraveled = numpy.zeros(evolutionIterations)
-finalSpeed = numpy.zeros(evolutionIterations)
+distanceTraveled = numpy.full(numpy.zeros(evolutionIterations),population)
+finalSpeed = numpy.full(numpy.zeros(evolutionIterations),population)
 
-target = numpy.zeros(p.getNumJoints(RoboBoi))
+target = numpy.full(numpy.zeros(p.getNumJoints(RoboBoi)),population)
 #all_target = numpy.zeros()
-bestIter = 0;
+bestIter = numpy.zeros(population);
 
 for k in range(evolutionIterations):
 	print("Loop: " + str(k))
@@ -306,31 +236,9 @@ for k in range(evolutionIterations):
 
 		intermediateResultList.append(intermediateResults)
 
-	#p.resetSimulation()
-	#p.restoreState(INITSTATE)
-	resetRobot(RoboBoi)
+	simulateBot(RoboBoi,maxstep)
 
-	#randomize the thing
-	hillClimbSingle(a,b,c,omega)
-	tuenover = False
-	for i in range (maxstep):
-
-		p.stepSimulation()
-	## Do all our joint/link data handling before moving
-		if i > 500:
-			tuenover = isTurnedOver(RoboBoi)
-			if (tuenover):
-				print("FLIPPED")
-				break
-			else:
-				for j in range (p.getNumJoints(RoboBoi)):
-					#pool.apply_async(worker, setJoint(j,i,RoboBoi))
-					setJoint(j,i,RoboBoi)
-					
-	distanceTraveled[k] = calcDistance(RoboBoi)
-	finalSpeed[k] = currentSpeed(RoboBoi)
-
-	if (k != 0 and not tuenover):
+	if (k != 0):
 		if(distanceTraveled[k] > distanceTraveled[bestIter]):
 			bestIter = k
 			print("found better solution on iteration: " + str(k))
@@ -358,37 +266,33 @@ print(b_best)
 print(c_best)
 print(omega_best)
 
-
-
 print("INTERMEDIATE RESULTS")
 print(intermediateResultList)
 
-pool.close()
-pool.join()
 
-with open("intermediateResultsHILL.csv", 'w', newline='') as myfile:
+with open("intermediateResultsGenetic.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(intermediateResults)
 
-with open("finalResultHILL.csv", 'w', newline='') as myfile:
+with open("finalResultGenetic.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(a_best)
      wr.writerow(b_best)
      wr.writerow(c_best)
      wr.writerow(omega_best)
 
-with open("DistanceHILL.csv", 'w', newline='') as myfile:
+with open("DistanceGenetic.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(distanceTraveled)
 
 
-with open("finalSpeedHILL.csv", 'w', newline='') as myfile:
+with open("finalSpeedGenetic.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(finalSpeed)
 
 
 
-### REGULAR MOVEMENT COMMANDS
+### REGULAR MOVEMENT COMMANDSkllllllllllllllllllllllllllllllllllllllllllllll
         # p.setJointMotorControl2(RoboBoi, 0, p.POSITION_CONTROL, \
         #     target1)
 

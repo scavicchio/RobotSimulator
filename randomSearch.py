@@ -280,23 +280,23 @@ print(intermediateResultList)
 pool.close()
 pool.join()
 
-with open("intermediateResultsHILL.csv", 'w', newline='') as myfile:
+with open("intermediateResultsRandom.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(intermediateResults)
 
-with open("finalResultHILL.csv", 'w', newline='') as myfile:
+with open("finalResultRandom.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(a_best)
      wr.writerow(b_best)
      wr.writerow(c_best)
      wr.writerow(omega_best)
 
-with open("DistanceHILL.csv", 'w', newline='') as myfile:
+with open("DistanceRandom.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(distanceTraveled)
 
 
-with open("finalSpeedHILL.csv", 'w', newline='') as myfile:
+with open("finalSpeedRamdom.csv", 'w', newline='') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(finalSpeed)
 
