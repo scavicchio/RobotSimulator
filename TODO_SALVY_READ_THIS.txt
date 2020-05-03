@@ -1,0 +1,22 @@
+5 Hill Climbers
+	For this, just run them all 5 times, save all the data, 
+	we've got to make Error Bars so save ALL the data so we can generate some StDev
+
+Jump (max height)
+	Run one hill climber for a shorter amount time where the reward function
+	is an increase in HEIGHT not distance, should be a straight forward change
+
+ALternate Environment (Mars g= 1/3)
+	Just change gravity to be something way lower (or way more I guess?)
+	All it says is "Alternate environment" so let's choose something as EZ as possible
+
+Damage Scenario (one missing motor)
+	Just shut off a shoulder or knee joint for one of the sides and see
+	if the hill climber can figure out a solution to it
+		Again, doesn't have to be a very long run
+
+That's really it, I'd say remove OMEGA values from the hilll climber and random search,
+	even a small Omega value can really fuck up a lot of things if it's out of phase,
+	and really all the robot needs to do is have two opposite regular sin waves going at the same time
+	so it'll be way easier to learn if there's no phase change between runs
+
