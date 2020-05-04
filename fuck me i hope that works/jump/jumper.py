@@ -206,7 +206,7 @@ def randomizeParams(a,b,c,omega):
 	return 
 
 ## Loading
-physicsClient = p.connect(p.GUI)#or p.DIRECT for non-graphical version
+physicsClient = p.connect(p.DIRECT)#or p.DIRECT for non-graphical version
 p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
 p.setGravity(0,0,-10)
 planeId = p.loadURDF("plane.urdf")
@@ -252,7 +252,7 @@ omega_best = omega
 
 ## Simulate the thing
 maxstep = 5000
-evolutionIterations = 10000
+evolutionIterations = 6000
 
 intermediateResults = numpy.zeros([4,p.getNumJoints(RoboBoi)])
 print(intermediateResults)
