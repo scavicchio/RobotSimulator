@@ -249,7 +249,7 @@ omega_best = omega
 
 ## Simulate the thing
 maxstep = 10000
-evolutionIterations = 10000
+evolutionIterations = 15000
 
 intermediateResults = numpy.zeros([4,p.getNumJoints(RoboBoi)])
 print(intermediateResults)
