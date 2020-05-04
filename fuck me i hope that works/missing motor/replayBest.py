@@ -28,7 +28,19 @@ def isTurnedOver(RoboBoi):
 			return True;
 
 	return False;
-	
+
+def resetRobot(RoboBoi):
+	p.resetBasePositionAndOrientation(RoboBoi,originalPos, originalOrientation)
+
+	for joint in range(p.getNumJoints(RoboBoi)):
+		p.resetJointState(RoboBoi,joint,0)
+		p.setJointMotorControl2(RoboBoi,joint,p.VELOCITY_CONTROL,0)
+		#p.setJointMotorControl2(RoboBoi,joint,p.TORQUE_CONTROL,0)
+
+	p.setJointMotorControl2(RoboBoi, 9, p.POSITION_CONTROL, -0.4)
+	p.setJointMotorControl2(RoboBoi, 6, p.POSITION_CONTROL, -0.4) 
+	return 
+
 ## Loading
 physicsClient = p.connect(p.GUI)#or p.DIRECT for non-graphical version
 p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
@@ -59,7 +71,7 @@ a = numpy.zeros(p.getNumJoints(RoboBoi))
 b = numpy.zeros(p.getNumJoints(RoboBoi))
 c = numpy.zeros(p.getNumJoints(RoboBoi))
 omega = numpy.zeros(p.getNumJoints(RoboBoi))
-
+resetRobot(RoboBoi)
 for i in range (p.getNumJoints(RoboBoi)):
 	a[i] = float(data[0][i])
 	b[i] = float(data[1][i])
@@ -89,3 +101,4 @@ for i in range (maxstep):
 			for j in range (p.getNumJoints(RoboBoi)):
 				#pool.apply_async(worker, setJoint(j,i,RoboBoi))
 				setJoint(j,i,RoboBoi)
+	time.sleep(1./2400.)

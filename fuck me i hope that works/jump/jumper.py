@@ -265,7 +265,7 @@ finalSpeed = numpy.zeros(evolutionIterations)
 averageSpeeds = numpy.zeros(evolutionIterations)
 weightedScores = numpy.zeros(evolutionIterations)
 target = numpy.zeros(p.getNumJoints(RoboBoi))
-maxHeights = numpy.zeros(p.getNumJoints(RoboBoi))
+maxHeights = numpy.zeros(evolutionIterations)
 #all_target = numpy.zeros()
 bestIter = 0;
 
@@ -300,7 +300,7 @@ for k in range(evolutionIterations):
 		p.stepSimulation()
 	## Do all our joint/link data handling before moving
 		if i > 500:
-			tuenover = isTurnedOver(RoboBoi)
+			tuenover = False
 			if (tuenover):
 				print("FLIPPED")
 				break
